@@ -14,3 +14,11 @@
   border-radius: 20px;
   box-shadow: 5px 5px 20px rgba(186, 186, 186, 0.367);
 }
+
+.reading {
+  /* background-color: aqua; */
+  position: absolute;
+  /* display: flex; */
+  top: 5%;
+  left: 76%;
+}

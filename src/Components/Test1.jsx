@@ -5,6 +5,7 @@ import { OrbitControls, useGLTF } from '@react-three/drei'
 import { PerspectiveCamera } from '@react-three/drei/native'
 import { Suspense } from 'react'
 import { AxesHelper } from 'three'
+import { HexColorPicker } from 'react-colorful'
 
 export const ColourContext = React.createContext()
 
@@ -28,22 +29,31 @@ function Model({ ...props }) {
 
     return (
         <>
-            {hovered}
+            <h1>{hovered != null ? hovered : null}
+                {hovered === null ? col1.current : null}</h1>
+
             <Canvas
                 style={{ height: "100%" }}
                 camera={{ fov: 70, position: [6.5, 1, 2.5] }}
             >
                 {/* <primitive object={new AxesHelper(10)} /> */}
-                <Suspense fallback={console.log("waiting")}></Suspense>
+                {/* <Suspense fallback={console.log("waiting")}></Suspense> */}
                 <ambientLight />
                 <directionalLight intensity={2} position={[110, 110, 165]} />
                 <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
 
                 <group ref={group} {...props} dispose={null}
                     scale={1} position={[0, 2, 4]}
-                    onPointerOver={(e) => { e.stopPropagation(); setHovered(e.object.material.name) }}
+                    onPointerOver={(e) => {
+                        e.stopPropagation();
+                        setHovered(e.object.material.name);
+                        // col1.current = e.object.material.name;
+                    }}
                     onPointerOut={(e) => { e.intersections.length === 0 && setHovered(null) }}
-                    onPointerDown={(e) => { e.stopPropagation(); col1.current = e.object.material.name }}
+                    onPointerDown={(e) => {
+                        e.stopPropagation();
+                        col1.current = e.object.material.name
+                    }}
                     onPointerMissed={(e) => { col1.current = null }}
                 >
                     <group position={[1.31, 26.08, -3.67]} rotation={[0, Math.PI / 2, 0]}>
@@ -250,55 +260,87 @@ function Model({ ...props }) {
 }
 
 
+function Input() {
+    const col1 = useContext(ColourContext)
+    let update = {}
+    return (<>
+        <b>Ceiling colour : </b>
+        <input id="col_val" />
+        <button type="button" onClick={() => {
+
+            // colours.items.ceil = document.getElementById('col_val').value;
+            // console.log(colours.items.ceil);
+            update = { ceil: document.getElementById('col_val').value }
+            // setColstate(prev => ({
+            //     ...prev,
+            //     ...update
+            // }))
+            // console.log(colstate)
+            col1.ceil = document.getElementById('col_val').value
+        }}>
+            submit
+        </button>
+        <br />
+        <br />
+        <b>Wall colour : </b>
+        <input id="col_val1" />
+        <button type="button" onClick={() => {
+            update = { wall: document.getElementById('col_val1').value }
+            // setColstate(prev => ({
+            //     ...prev,
+            //     ...update
+            // }))
+            // console.log(colstate)
+            col1.wall = document.getElementById('col_val1').value
+        }}>
+            submit
+        </button>
+    </>)
+}
+
+
+function Picker() {
+    const col1 = useContext(ColourContext)
+    console.log(col1[col1.current])
+    const [selected, setSelected] = useState(null);
+    return (<div>
+
+        <HexColorPicker
+            color={col1.current === "wall" ? col1.wall : col1.ceil}
+            onChange={(color) => {
+                // console.log(color)
+                if (col1.current === "wall") {
+                    col1.wall = color
+                } else if (col1.current === "ceiling") {
+                    col1.ceil = color
+                }
+                // col1[col1.current] = color
+            }} />
+    </div>)
+}
+
+
 const Test1 = () => {
 
     const [colstate, setColstate] = useState({
-        current: "mdkf",
+        current: null,
         ceil: "white",
         wall: "blue"
     })
 
-    let update = {}
+
 
     return (
         <ColourContext.Provider value={colstate}>
             <div className='wrapper1'>
-
                 <Model />
-                <br />
                 <div className="reading">
-                    <b>Ceiling colour : </b>
-                    <input id="col_val" />
-                    <button type="button" onClick={() => {
-
-                        // colours.items.ceil = document.getElementById('col_val').value;
-                        // console.log(colours.items.ceil);
-                        update = { ceil: document.getElementById('col_val').value }
-                        setColstate(prev => ({
-                            ...prev,
-                            ...update
-                        }))
-                        // console.log(colstate)
-                    }}>
-                        submit
-                    </button>
-                    <br />
-                    <br />
-                    <b>Wall colour : </b>
-                    <input id="col_val1" />
-                    <button type="button" onClick={() => {
-                        update = { wall: document.getElementById('col_val1').value }
-                        setColstate(prev => ({
-                            ...prev,
-                            ...update
-                        }))
-                        // console.log(colstate)
-                    }}>
-                        submit
-                    </button>
+                    <Input />
                 </div>
                 {/* {colstate.current} */}
+                <Picker />
             </div>
+
 
         </ColourContext.Provider >
     )
