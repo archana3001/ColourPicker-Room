@@ -62,9 +62,9 @@ export function FF(...props) {
                         padding: "10px 30px",
                         border: "3px solid "
                     }}>
-                    <h1>
+                    <h3>
                         Please select wall for colour customization options
-                    </h1>
+                    </h3>
                 </div>}
         </div >
     );
@@ -251,7 +251,7 @@ const ColourPicker = () => {
 
     return (
         <ColourContext.Provider value={colstate}>
-            <h1 className="canvastitle">Mesh selected : {tar}</h1>
+            <h2 className="canvastitle">Mesh selected : {tar}</h2>
             <div className="canvasdiv" ref={mountRef}></div>
             <FF namee={tar} col={colstate.wall} />
         </ColourContext.Provider>
