@@ -19,34 +19,60 @@ export function FF(...props) {
     console.log(col_det)
     return (
         <div>
-            <HexColorPicker
-                style={{
-                    position: 'absolute',
-                    height: '15vh',
-                    width: '15vh',
-                    top: '80vh',
-                    left: '50vw',
-                    transform: 'translateX(-50%)'
-                }}
-                color={
-                    props[0].col
-                    // col_det.wall
-                    // tar === "wall_4" ? "red" : "blue"
-                }
-                onChange={(color) => { if (props[0].namee === "wall_4") { col_det.wall = color } }}
-            />
-            {/* <button type="button" onClick={() => {
-                col_det.wall = "#343e5c"
-            }}>
-                submit
-            </button> */}
-        </div>
+            {(props[0].namee === "wall_7"
+                || props[0].namee === "wall_7" || props[0].namee === "wall_5"
+                || props[0].namee === "wall_4" || props[0].namee === "wall_3"
+                || props[0].namee === "wall_2" || props[0].namee === "wall_1"
+                || props[0].namee === "wall_0") &&
+                <HexColorPicker
+                    style={{
+                        position: 'absolute',
+                        height: '15vh',
+                        width: '15vh',
+                        top: '80vh',
+                        left: '50vw',
+                        transform: 'translateX(-50%)'
+                    }}
+                    color={
+                        props[0].col
+                        // col_det.wall
+                        // tar === "wall_4" ? "red" : "blue"
+                    }
+                    onChange={(color) => {
+                        if (props[0].namee === "wall_7"
+                            || props[0].namee === "wall_7" || props[0].namee === "wall_5"
+                            || props[0].namee === "wall_4" || props[0].namee === "wall_3"
+                            || props[0].namee === "wall_2" || props[0].namee === "wall_1"
+                            || props[0].namee === "wall_0") { col_det.wall = color }
+                    }}
+                />}
+            {!(props[0].namee === "wall_7"
+                || props[0].namee === "wall_7" || props[0].namee === "wall_5"
+                || props[0].namee === "wall_4" || props[0].namee === "wall_3"
+                || props[0].namee === "wall_2" || props[0].namee === "wall_1"
+                || props[0].namee === "wall_0") &&
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '80vh',
+                        left: '50vw',
+                        transform: 'translateX(-50%)',
+                        // backgroundColor: "rgba(86, 44, 184, 0.908)",
+                        borderRadius: "5px",
+                        padding: "10px 30px",
+                        border: "3px solid "
+                    }}>
+                    <h1>
+                        Please select wall for colour customization options
+                    </h1>
+                </div>}
+        </div >
     );
 }
 
 const ColourPicker = () => {
     const mountRef = useRef(null);
-    const [tar, setTar] = useState("nope");
+    const [tar, setTar] = useState("None");
     const [col, setCol] = useState("#039f4e");
 
     var room;
@@ -55,7 +81,7 @@ const ColourPicker = () => {
     const [colstate, setColstate] = useState({
         current: null,
         ceil: "#024",
-        wall: "#dad",
+        wall: "",
     });
 
     useEffect(() => {

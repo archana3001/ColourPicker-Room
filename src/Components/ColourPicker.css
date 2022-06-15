@@ -20,6 +20,7 @@
   top: 25%;
   left: 25%;
   border-radius: 20px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.367);
 }
 .canvastitle {
   position: absolute;
@@ -27,6 +28,9 @@
   left: 50%;
   padding: 3px 11px;
   transform: translateX(-50%);
-  background-color: rgba(86, 44, 184, 0.908);
+  /* background-color: rgba(104, 74, 175, 0.908); */
   border-radius: 5px;
+  color: rgba(57, 18, 147, 0.908);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.367);
+  border: 3px solid rgba(57, 18, 147, 0.908);
 }
