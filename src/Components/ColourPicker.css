@@ -1,0 +1,32 @@
+/* .colourwrapper {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  top: 5%;
+  left: 2%;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ffffff;
+  width: 70vw;
+  height: 90vh;
+  color: #000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-radius: 20px;
+  box-shadow: 5px 5px 20px rgba(131, 54, 54, 0.367);
+} */
+
+.canvasdiv {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  border-radius: 20px;
+}
+.canvastitle {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  padding: 3px 11px;
+  transform: translateX(-50%);
+  background-color: rgba(86, 44, 184, 0.908);
+  border-radius: 5px;
+}
