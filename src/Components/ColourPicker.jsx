@@ -11,16 +11,11 @@ export const ColourContext = React.createContext()
 
 export function FF(...props) {
     const col_det = useContext(ColourContext)
-    let update = {}
-    let k = props[0].col
-    useEffect(() => {
-        console.log(k)
-    }, [k])
-    console.log(col_det)
+   
     return (
         <div>
             {(props[0].namee === "wall_7"
-                || props[0].namee === "wall_7" || props[0].namee === "wall_5"
+                || props[0].namee === "wall_6" || props[0].namee === "wall_5"
                 || props[0].namee === "wall_4" || props[0].namee === "wall_3"
                 || props[0].namee === "wall_2" || props[0].namee === "wall_1"
                 || props[0].namee === "wall_0") &&
@@ -47,7 +42,7 @@ export function FF(...props) {
                     }}
                 />}
             {!(props[0].namee === "wall_7"
-                || props[0].namee === "wall_7" || props[0].namee === "wall_5"
+                || props[0].namee === "wall_6" || props[0].namee === "wall_5"
                 || props[0].namee === "wall_4" || props[0].namee === "wall_3"
                 || props[0].namee === "wall_2" || props[0].namee === "wall_1"
                 || props[0].namee === "wall_0") &&
@@ -73,10 +68,10 @@ export function FF(...props) {
 const ColourPicker = () => {
     const mountRef = useRef(null);
     const [tar, setTar] = useState("None");
-    const [col, setCol] = useState("#039f4e");
+    // const [col, setCol] = useState("#039f4e");
 
     var room;
-    var col1;
+    // var col1;
 
     const [colstate, setColstate] = useState({
         current: null,
@@ -103,6 +98,7 @@ const ColourPicker = () => {
         scene.add(light);
 
         const light1 = new THREE.PointLight(0xffffff, 1.5, 10, 2);
+       
 
         loader.load(
             "room_camera_geometry.glb",
@@ -123,14 +119,13 @@ const ColourPicker = () => {
                 console.error(error);
             }
         );
-
         scene.add(light1);
+       
 
         scene.background = new THREE.Color(0xffeeee);
 
         const controls = new OrbitControls(camera, renderer.domElement);
 
-        //controls.update() must be called after any manual changes to the camera's transform
         camera.position.set(-0.2, 0.5, 6);
         controls.update();
 
@@ -143,54 +138,22 @@ const ColourPicker = () => {
             let y = -1 * (event.clientY / window.innerHeight) * 2 + 1;
             pointer.x = x / 0.5;
             pointer.y = y / 0.5;
-            // console.log(pointer.y)
         }
 
         function onClick(event) {
-            // let selected
             raycaster.setFromCamera(pointer, camera);
             num++;
             if (raycaster.intersectObjects(scene.children).length > 0) {
-                console.log(raycaster.intersectObjects(scene.children)[0].object.name);
+                // console.log(raycaster.intersectObjects(scene.children)[0].object.name);
                 setTar(raycaster.intersectObjects(scene.children)[0].object.name);
-                if (
-                    raycaster.intersectObjects(scene.children)[0].object.material.name ===
-                    "wall"
-                ) {
-                    console.log("hahaha");
-                    col1 = "#ff0"
-                    setCol("#ff0")
-                    // room.children[23].material.color.set(col);
-                } else {
-                    col1 = "#0f0"
-                    setCol("#0f0")
-                    // room.children[23].material.color.set(col);
-                }
-                console.log(col1)
-                // selected = raycaster.intersectObjects(scene.children)[0].object.name;
-                // selected = raycaster.intersectObjects(scene.children)
+               
             } else {
             }
-            try {
-                console.log("m", num);
-                // console.log("m", num, raycaster.intersectObjects(scene.children)[0].object.name)
-            } catch (err) {
-                console.log(err);
-            }
-            // event.stopPropagation()
+           
         }
 
         window.addEventListener("pointermove", onPointerMove);
         window.addEventListener("click", onClick);
-
-        function hover() {
-            raycaster.setFromCamera(pointer, camera);
-            const intersects = raycaster.intersectObjects(scene.children);
-            try {
-            } catch (err) {
-            }
-            renderer.render(scene, camera);
-        }
 
         function reset() {
             try {
@@ -202,9 +165,7 @@ const ColourPicker = () => {
 
         var animate = function () {
             requestAnimationFrame(animate);
-            // requestAnimationFrame(hover)
             reset()
-            hover();
 
             controls.update();
             renderer.render(scene, camera);
@@ -224,11 +185,6 @@ const ColourPicker = () => {
     }, [colstate.wall]);
 
 
-
-
-    useEffect(() => {
-        console.log("change", colstate.wall)
-    }, [colstate.wall])
 
     return (
         <ColourContext.Provider value={colstate}>
