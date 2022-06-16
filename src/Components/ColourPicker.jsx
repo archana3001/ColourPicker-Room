@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -98,14 +98,7 @@ const ColourPicker = () => {
         // -----------------------------
         renderer.setSize(window.innerWidth * 0.5, window.innerHeight * 0.5);
         mountRef.current.appendChild(renderer.domElement);
-
-        // var geometry = new THREE.BoxGeometry(1, 1, 1);
-        // var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        // var cube = new THREE.Mesh(geometry, material);
-        // scene.add(cube);
-
         const loader = new GLTFLoader();
-
         const light = new THREE.AmbientLight(); // soft white light
         scene.add(light);
 
@@ -133,8 +126,6 @@ const ColourPicker = () => {
 
         scene.add(light1);
 
-        const axesHelper = new THREE.AxesHelper(50);
-        // scene.add(axesHelper);
         scene.background = new THREE.Color(0xffeeee);
 
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -196,23 +187,13 @@ const ColourPicker = () => {
             raycaster.setFromCamera(pointer, camera);
             const intersects = raycaster.intersectObjects(scene.children);
             try {
-                // for (let i = 0; i < intersects.length; i++) {
-                //     intersects[i].object.material.color.set(0xff0000);
-                // }
-                // intersects[0].object.material.color.set(0xff0000);
             } catch (err) {
-                //  console.log("hell")
             }
             renderer.render(scene, camera);
         }
 
         function reset() {
             try {
-                // for (let i = 0; i < room.children.length; i++) {
-                //     if (room.children[i].name === tar) {
-                //         room.children[i].material.color.set(0xff0000);
-                //     }
-                // }
                 room.children[23].material.color.set(colstate.wall);
             } catch (err) { }
         }
